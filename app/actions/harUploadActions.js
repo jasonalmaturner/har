@@ -26,23 +26,25 @@ export function receiveUploadResponse() {
   };
 }
 
-export function handleUploadError(err) {
+export function handleUploadError(uploadError) {
   return {
     type: HANDLE_UPLOAD_ERROR,
-    err,
+    uploadError,
   };
 }
 
-export function requestFileSend(filesA, filesB) {
+export function requestFileSend() {
   return (dispatch, getState) => {
+    const { a, b } = getState().harFiles;
     axios.post('/api/files', {
-      filesA,
-      filesB,
+      a,
+      b,
     }).then(res => {
       dispatch(receiveHarData(res.data.a, res.data.b));
-      dispatch(receiveUploadResponse());
+      return dispatch(receiveUploadResponse());
     }).catch(err => {
-      dispatch(handleUploadError(err));
+      console.log('upload err', err);
+      return dispatch(handleUploadError(err));
     });
   };
 }
