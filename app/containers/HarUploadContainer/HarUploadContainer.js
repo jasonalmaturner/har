@@ -1,17 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { connect} from 'react-redux';
 import styles from './HarUploadContainer.css';
-import { addFile } from '../../actions/harUploadActions';
+import { addFile, sendFile } from '../../actions/harUploadActions';
 import UploadFiles from '../../components/HarUpload/HarUpload';
 
 class HarUploadContainer extends Component {
   constructor(props) {
     super(props);
     this.handleDrop = this.handleDrop.bind(this);
+    this.handleSend = this.handleSend.bind(this);
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
   }
 
   handleDrop(aOrB, files) {
     this.props.dispatch(addFile(files, aOrB));
+  }
+
+  handleSend() {
+    this.props.dispatch(sendFile());
+  }
+
+  handleRefreshClick(e) {
+    e.preventDefault();
   }
 
   render() {
@@ -23,7 +33,9 @@ class HarUploadContainer extends Component {
           harsA={harsA}
           harsB={harsB}
           isUploading={isUploading}
-          uploadError={uploadError} />
+          uploadError={uploadError}
+          handleSend={this.handleSend}
+          handleRefreshClick={this.handleRefreshClick} />
       </div>
     );
   }

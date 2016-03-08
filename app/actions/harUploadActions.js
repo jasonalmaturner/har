@@ -33,12 +33,13 @@ export function handleUploadError(uploadError) {
   };
 }
 
-export function requestFileSend() {
+export function sendFile() {
   return (dispatch, getState) => {
-    const { a, b } = getState().harFiles;
+    const { harsA, harsB } = getState().uploadFiles;
+    dispatch(requestFileSend());
     axios.post('/api/files', {
-      a,
-      b,
+      harsA,
+      harsB,
     }).then(res => {
       dispatch(receiveHarData(res.data.a, res.data.b));
       return dispatch(receiveUploadResponse());

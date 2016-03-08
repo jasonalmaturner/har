@@ -37,7 +37,7 @@ export function uploadFiles(state = {
         ...state,
         ...{
           isUploading: false,
-          uploadError,
+          uploadError: action.uploadError,
         },
       };
     default:
