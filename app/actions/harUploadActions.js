@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { receiveHarData } from './harDisplayActions';
+import { defer, all } from 'q';
 
 export const ADD_FILE = 'ADD_FILE';
 export const REQUEST_FILE_SEND = 'REQUEST_FILE_SEND';
@@ -35,11 +36,16 @@ export function handleUploadError(uploadError) {
 
 export function sendFile() {
   return (dispatch, getState) => {
-    const { harsA, harsB } = getState().uploadFiles;
     dispatch(requestFileSend());
-    axios.post('/api/files', {
-      harsA,
-      harsB,
+    const { harsA, harsB } = getState().uploadFiles;
+    let harsAFiles = readFiles(harsA);
+    let harsBFiles = readFiles(harsB);
+    all([harsAFiles, harsBFiles]).then(res => {
+      console.log(res);
+      return axios.post('/api/files', {
+        harsA: res[0],
+        harsB: res[1],
+      });
     }).then(res => {
       dispatch(receiveHarData(res.data.a, res.data.b));
       return dispatch(receiveUploadResponse());
@@ -49,3 +55,23 @@ export function sendFile() {
     });
   };
 }
+
+function readFiles(files) {
+  return all(files.map(file => readFile(file)));
+}
+
+function readFile(file) {
+  let dfd = defer();
+  let reader = new FileReader();
+  reader.onload = function (event) {
+    console.log(reader.result);
+    dfd.resolve(reader.result);
+  };
+
+  reader.onerror = function (event) {
+    dfd.reject('read error');
+  };
+
+  reader.readAsArrayBuffer(file);
+  return dfd.promise;
+};
