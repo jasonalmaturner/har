@@ -38,14 +38,38 @@ export function sendFile() {
   return (dispatch, getState) => {
     dispatch(requestFileSend());
     const { harsA, harsB } = getState().uploadFiles;
+
+    // let data = new FormData();
+    // console.log(1111, data);
+    // appendFiles(data, harsA, 'aFiles');
+    // appendFiles(data, harsB, 'bFiles');
+    // for (var pair of data) {
+    //   console.log(pair[0], pair[1], pair)
+    // }
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    // axios.post('/api/files', {
+    //   harsA,
+    //   harsB,
+    // }, options).then(res => {
+    //   dispatch(receiveHarData(res.data.a, res.data.b));
+    //   return dispatch(receiveUploadResponse());
+    // }).catch(err => {
+    //   console.log('upload err', err);
+    //   return dispatch(handleUploadError(err));
+    // });
+
     let harsAFiles = readFiles(harsA);
     let harsBFiles = readFiles(harsB);
     all([harsAFiles, harsBFiles]).then(res => {
-      console.log(res);
       return axios.post('/api/files', {
         harsA: res[0],
         harsB: res[1],
-      });
+      }, options);
     }).then(res => {
       dispatch(receiveHarData(res.data.a, res.data.b));
       return dispatch(receiveUploadResponse());
@@ -56,6 +80,14 @@ export function sendFile() {
   };
 }
 
+function appendFiles(data, files, aOrB) {
+  let num = 1;
+  files.forEach(file => {
+    data.append(`${aOrB}${num}`, file);
+    num++;
+  });
+}
+
 function readFiles(files) {
   return all(files.map(file => readFile(file)));
 }
@@ -64,7 +96,6 @@ function readFile(file) {
   let dfd = defer();
   let reader = new FileReader();
   reader.onload = function (event) {
-    console.log(reader.result);
     dfd.resolve(reader.result);
   };
 
@@ -72,6 +103,6 @@ function readFile(file) {
     dfd.reject('read error');
   };
 
-  reader.readAsArrayBuffer(file);
+  reader.readAsText(file);
   return dfd.promise;
 };
