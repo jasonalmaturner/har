@@ -65,13 +65,12 @@ export function sendFile() {
 
     let harsAFiles = readFiles(harsA);
     let harsBFiles = readFiles(harsB);
-    all([harsAFiles, harsBFiles]).then(res => {
-      return axios.post('/api/files', {
+    all([harsAFiles, harsBFiles]).then(res => (
+      axios.post('/api/files', {
         harsA: res[0],
         harsB: res[1],
-      }, options);
-    }).then(res => {
-      console.log(res);
+      }, options)
+    )).then(res => {
       dispatch(receiveHarData(res.data.aData, res.data.bData));
       return dispatch(receiveUploadResponse());
     }).catch(err => {
