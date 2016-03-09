@@ -5,8 +5,8 @@ export default {
     // Eventually need to make more robust to validate that the
     // file is a har file. Probably best to have some validation in the
     // front and the back.
-    if (!req.body.harsA || !req.body.harsB) {
-      return res.status(500).json('need two sets of file(s)');
+    if (!req.body.harsA && !req.body.harsB) {
+      return res.status(500).json('upload file(s)');
     }
 
     const aFiles = parseFiles(req.body.harsA);
@@ -40,7 +40,6 @@ function compileAverages(arr) {
     const {
       js, images, css, html,
     } = compileFileLoads(file.log.entries, file.log.pages[0].pageTimings.onLoad);
-    console.log(111111, js, images, css, html);
     jsTotal += js;
     imagesTotal += images;
     cssTotal += css;
@@ -70,10 +69,10 @@ function compileAverages(arr) {
 }
 
 function compileFileLoads(entries, onLoad) {
-  const jsRe = /(\/javascript|\/ecmascript)/g;
-  const imgRe = /(\/png|\/jpg|\/jpeg|\/gif|\/tiff|\/bmp)/g;
-  const cssRe = /(\/css)/g;
-  const htmlRe = /(\/html)/g;
+  const jsRe = /(javascript|ecmascript|json)/g;
+  const imgRe = /(png|jpg|jpeg|gif|tiff|bmp)/g;
+  const cssRe = /(css)/g;
+  const htmlRe = /(html)/g;
   let js = 0;
   let images = 0;
   let css = 0;
