@@ -71,7 +71,8 @@ export function sendFile() {
         harsB: res[1],
       }, options);
     }).then(res => {
-      dispatch(receiveHarData(res.data.a, res.data.b));
+      console.log(res);
+      dispatch(receiveHarData(res.data.aData, res.data.bData));
       return dispatch(receiveUploadResponse());
     }).catch(err => {
       console.log('upload err', err);
