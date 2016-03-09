@@ -5,6 +5,10 @@ export default {
     // Eventually need to make more robust to validate that the
     // file is a har file. Probably best to have some validation in the
     // front and the back.
+    if (!req.body.harsA || !req.body.harsB) {
+      return res.status(500).json('need two sets of file(s)');
+    }
+
     const aFiles = parseFiles(req.body.harsA);
     const bFiles = parseFiles(req.body.harsB);
     const aData = compileAverages(aFiles);
@@ -24,53 +28,76 @@ function compileAverages(arr) {
   let onLoadTotal = 0;
   let onContentLoadTotal = 0;
   let requestTotal = 0;
+  let jsTotal = 0;
+  let imagesTotal = 0;
+  let cssTotal = 0;
+  let htmlTotal = 0;
+  let otherTotal = 0;
   arr.forEach(file => {
     onLoadTotal += file.log.pages[0].pageTimings.onLoad;
     onContentLoadTotal += file.log.pages[0].pageTimings.onContentLoad;
     requestTotal += file.log.entries.length;
+    const {
+      js, images, css, html,
+    } = compileFileLoads(file.log.entries, file.log.pages[0].pageTimings.onLoad);
+    console.log(111111, js, images, css, html);
+    jsTotal += js;
+    imagesTotal += images;
+    cssTotal += css;
+    htmlTotal += html;
   });
+  const onLoadAvg = onLoadTotal / requestTotal;
+  const onContentAvg = onContentLoadTotal / requestTotal;
+  const requestAvg = requestTotal / arr.length;
+  const jsAvg = jsTotal / arr.length;
+  const imagesAvg = imagesTotal / arr.length;
+  const cssAvg = cssTotal / arr.length;
+  const htmlAvg = htmlTotal / arr.length;
+  const otherAvg = 1 - (jsAvg + imagesAvg + cssAvg + htmlAvg);
+
+  // otherAvg is not a true average. It's just what's left after all the other file averages
+  // are added up.
   return {
-    onLoadAvg: onLoadTotal / requestTotal,
-    onContentAvg: onContentLoadTotal / requestTotal,
-    requestAvg: requestTotal / arr.length,
+    onLoadAvg,
+    onContentAvg,
+    requestAvg,
+    jsAvg,
+    imagesAvg,
+    cssAvg,
+    htmlAvg,
+    otherAvg,
   };
 }
 
-function compileFileLoads(entries) {
-  const jsRe = /(javascript|ecmascript)/g;
-  const imgRe = /(png|jpg|jpeg|gif|tiff|bmp)/g;
-  const cssRe = /(css)/g;
-  const htmlRe = /(html)/g;
-  let resultsObj = {
-    js: 0,
-    images: 0,
-    css: 0,
-    html: 0,
-    other: 0,
-  };
+function compileFileLoads(entries, onLoad) {
+  const jsRe = /(\/javascript|\/ecmascript)/g;
+  const imgRe = /(\/png|\/jpg|\/jpeg|\/gif|\/tiff|\/bmp)/g;
+  const cssRe = /(\/css)/g;
+  const htmlRe = /(\/html)/g;
+  let js = 0;
+  let images = 0;
+  let css = 0;
+  let html = 0;
+  let loadTimeTotal = 0;
   entries.forEach(entry => {
     const mimeType = entry.response.content.mimeType;
-    const timings = entry.response.timings;
+    const loadTime = entry.time;
+    loadTimeTotal += loadTime;
     if (jsRe.test(mimeType)) {
-      resultsObj.js += addTimings(timings);
+      js += loadTime;
     } else if (imgRe.test(mimeType)) {
-      resultsObj.images += addTimings(timings);
+      images += loadTime;
     } else if (cssRe.test(mimeType)) {
-      resultsObj.css += addTimings(timings);
+      css += loadTime;
     } else if (htmlRe.test(mimeType)) {
-      resultsObj.html += addTimings(timings);
+      html += loadTime;
     }
   });
-  return resultsObj;
-}
-
-function addTimings(timings) {
-  let total = 0;
-  for (let key in timings) {
-    if (timings[key] > 0) {
-      total += timings[key];
-    }
-  }
-
-  return total;
+  const total = js + images + css + html;
+  return {
+    js: js / loadTimeTotal,
+    images: images / loadTimeTotal,
+    css: css / loadTimeTotal,
+    html: html / loadTimeTotal,
+  };
 }

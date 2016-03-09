@@ -38,6 +38,11 @@ export function sendFile() {
   return (dispatch, getState) => {
     dispatch(requestFileSend());
     const { harsA, harsB } = getState().uploadFiles;
+    if (!harsA[0] || !harsB[0]) {
+      return dispatch(handleUploadError({
+        error: 'upload at least two files',
+      }));
+    }
 
     // let data = new FormData();
     // console.log(1111, data);
