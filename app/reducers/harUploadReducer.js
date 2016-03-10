@@ -20,7 +20,7 @@ export function uploadFiles(state = {
       return {
         ...state,
         ...{
-          uploadError: false,
+          uploadError: {},
           isUploading: true,
         },
       };

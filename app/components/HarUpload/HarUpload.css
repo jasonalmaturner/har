@@ -59,9 +59,13 @@
 .button {
   box-sizing: border-box;
   color: white;
-  background-color: #e6550d;
+  background-color: #3182bd;
   border-width: thin;
   border-style: solid;
-  border-color: #fdae6b;
+  border-color: #C6DBED;
   border-radius: 10px;
+}
+
+.error {
+  color: #e6550d;
 }

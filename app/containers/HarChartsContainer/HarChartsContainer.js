@@ -11,7 +11,7 @@ class HarChartsContainer extends Component {
   render() {
     const { aData, bData, loaded } = this.props;
     return (
-      <div>
+      <div className={styles.mainChartsContainer}>
         {loaded && <HarCharts
           aData={aData}
           bData={bData} />}

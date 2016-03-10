@@ -69,7 +69,7 @@ const HarCharts = ({ aData, bData }) => {
     { label: 'Other', value: Math.round(bData.otherAvg * 100) },
   ];
   return (
-    <div>
+    <div className={styles.chartsContainer}>
       <BarChart
         data={barData}
         width={700}
