@@ -77,6 +77,10 @@ const HarUpload = ({
         handleRefreshClick(e);
         handleSend();
       }}>Send Files</button>
+      {uploadError && <div className={styles.error}>
+        {uploadError.error}
+      </div>}
+      {isUploading && <img src='images/ripple.gif'/>}
     </div>
   );
 };

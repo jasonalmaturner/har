@@ -38,7 +38,7 @@ export function sendFile() {
   return (dispatch, getState) => {
     dispatch(requestFileSend());
     const { harsA, harsB } = getState().uploadFiles;
-    if (!harsA[0] && !harsB[0]) {
+    if (!harsA[0] || !harsB[0]) {
       return dispatch(handleUploadError({
         error: 'upload at least two files',
       }));
@@ -62,7 +62,7 @@ export function sendFile() {
       return dispatch(receiveUploadResponse());
     }).catch(err => {
       console.log('upload err', err);
-      return dispatch(handleUploadError(err));
+      return dispatch(handleUploadError({ error: err.data }));
     });
   };
 }
