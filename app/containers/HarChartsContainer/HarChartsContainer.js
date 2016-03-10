@@ -9,12 +9,12 @@ class HarChartsContainer extends Component {
   }
 
   render() {
-    const { aData, bData } = this.props;
+    const { aData, bData, loaded } = this.props;
     return (
       <div>
-        <HarCharts
+        {loaded && <HarCharts
           aData={aData}
-          bData={bData} />
+          bData={bData} />}
       </div>
     );
   }
@@ -30,14 +30,17 @@ function mapStateToProps(state) {
   const {
     aData,
     bData,
+    loaded,
   } = displayData || {
     aData: {},
     bData: {},
+    loaded: false,
   };
 
   return {
     aData,
     bData,
+    loaded,
   };
 }
 

@@ -5,6 +5,7 @@ import {
 export function displayData(state = {
   aData: {},
   bData: {},
+  loaded: false,
 }, action) {
   switch (action.type) {
     case RECEIVE_HAR_DATA:
@@ -13,6 +14,7 @@ export function displayData(state = {
         ...{
           aData: action.a,
           bData: action.b,
+          loaded: true,
         },
       };
     default:
