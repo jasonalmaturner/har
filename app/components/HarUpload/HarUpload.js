@@ -25,9 +25,9 @@ const HarUpload = ({
       <div className={styles.dropzonesContainer}>
         <div className={styles.dropzoneContainer}>
           <Dropzone className={styles.dropzone} onDrop={handleDrop.bind(null, 'harsA')}>
+            <h5 className={styles.set}>Set A</h5>
             <div className={styles.dropzoneContent}>
-              Drop har file here, or multiple files to compile an average of
-              multiple har files.
+              Drop har file(s) here. Upload multiple files to compile an average.
             </div>
           </Dropzone>
           <div>
@@ -50,8 +50,9 @@ const HarUpload = ({
         </div>
         <div className={styles.dropzoneContainer}>
           <Dropzone className={styles.dropzone} onDrop={handleDrop.bind(null, 'harsB')}>
+            <h5 className={styles.set}>Set B</h5>
             <div className={styles.dropzoneContent}>
-              Drop a second har file, or set of files, here to compare to.
+              Drop another har file, or set of har files here.
             </div>
           </Dropzone>
           <div>

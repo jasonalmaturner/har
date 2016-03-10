@@ -32,6 +32,7 @@
   border-color: black;
   border-width: 2px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -43,6 +44,7 @@
 }
 
 .dropzoneContent {
+  height: 80%;
   font-size: 0.8em;
   font-style: italic;
   text-align: center;
@@ -68,4 +70,9 @@
 
 .error {
   color: #e6550d;
+}
+
+.set {
+  height: 20%;
+  margin: 0;
 }

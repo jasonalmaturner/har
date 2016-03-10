@@ -40,7 +40,7 @@ export function sendFile() {
     const { harsA, harsB } = getState().uploadFiles;
     if (!harsA[0] || !harsB[0]) {
       return dispatch(handleUploadError({
-        error: 'upload at least two files',
+        error: 'Need file(s) in each set',
       }));
     }
 

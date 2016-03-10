@@ -9,8 +9,30 @@ export default {
       return res.status(500).json('upload file(s)');
     }
 
+    // console.log(typeof req.body.harsA[0], typeof req.body.harsB[0], req.body.harsB[0]);
+
+    // Checking files to make sure they are in JSON format, so they can be parsed
+    // correctly
+    if (!jsonChecker(req.body.harsA)) {
+      return res.status(500).json('Are you sure all the files in Set A were in JSON format?');
+    }
+
+    if (!jsonChecker(req.body.harsB)) {
+      return res.status(500).json('Are you sure all the files in Set B were in JSON format?');
+    }
+
     const aFiles = parseFiles(req.body.harsA);
     const bFiles = parseFiles(req.body.harsB);
+
+    // Checking files to make sure they are in the correct har format
+    if (!fileTypeCheck(aFiles)) {
+      return res.status(500).json('Are you sure all the files in Set A were har files?');
+    }
+
+    if (!fileTypeCheck(bFiles)) {
+      return res.status(500).json('Are you sure all the files in Set B were har files?');
+    }
+
     const aData = compileAverages(aFiles);
     const bData = compileAverages(bFiles);
     res.json({
@@ -20,7 +42,30 @@ export default {
   },
 };
 
+function jsonChecker(files) {
+  let flag = true;
+  files.forEach(file => {
+    try {
+      JSON.parse(file);
+    } catch (e) {
+      flag = false;
+    }
+  });
+  return flag;
+}
+
+function fileTypeCheck(files) {
+  let flag = true;
+  files.forEach(file => {
+    if (!file || !file.log || !file.log.pages || !file.log.entries) {
+      flag = false;
+    }
+  });
+  return flag;
+}
+
 function parseFiles(arr) {
+  // console.log(typeof arr[0]);
   return arr.map(file => JSON.parse(file));
 }
 
@@ -89,7 +134,6 @@ function compileAverages(arr) {
   const waitAvg = waitTotal / arr.length;
   const receiveAvg = receiveTotal / arr.length;
   const sslAvg = sslTotal / arr.length;
-
 
   // otherAvg is not a true average. It's just what's left after all the other file averages
   // are added up.

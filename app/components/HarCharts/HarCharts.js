@@ -7,50 +7,50 @@ const HarCharts = ({ aData, bData }) => {
     {
       name: 'blocked',
       values: [
-        { x: 'a', y: aData.timings.blockedAvg },
-        { x: 'b', y: bData.timings.blockedAvg },
+        { x: 'Set A', y: aData.timings.blockedAvg },
+        { x: 'Set B', y: bData.timings.blockedAvg },
       ],
     },
     {
       name: 'dns',
       values: [
-        { x: 'a', y: aData.timings.dnsAvg },
-        { x: 'b', y: bData.timings.dnsAvg },
+        { x: 'Set A', y: aData.timings.dnsAvg },
+        { x: 'Set B', y: bData.timings.dnsAvg },
       ],
     },
     {
       name: 'connect',
       values: [
-        { x: 'a', y: aData.timings.connectAvg },
-        { x: 'b', y: bData.timings.connectAvg },
+        { x: 'Set A', y: aData.timings.connectAvg },
+        { x: 'Set B', y: bData.timings.connectAvg },
       ],
     },
     {
       name: 'send',
       values: [
-        { x: 'a', y: aData.timings.sendAvg },
-        { x: 'b', y: bData.timings.sendAvg },
+        { x: 'Set A', y: aData.timings.sendAvg },
+        { x: 'Set B', y: bData.timings.sendAvg },
       ],
     },
     {
       name: 'wait',
       values: [
-        { x: 'a', y: aData.timings.waitAvg },
-        { x: 'b', y: bData.timings.waitAvg },
+        { x: 'Set A', y: aData.timings.waitAvg },
+        { x: 'Set B', y: bData.timings.waitAvg },
       ],
     },
     {
       name: 'receive',
       values: [
-        { x: 'a', y: aData.timings.receiveAvg },
-        { x: 'b', y: bData.timings.receiveAvg },
+        { x: 'Set A', y: aData.timings.receiveAvg },
+        { x: 'Set B', y: bData.timings.receiveAvg },
       ],
     },
     {
       name: 'ssl',
       values: [
-        { x: 'a', y: aData.timings.sslAvg },
-        { x: 'b', y: bData.timings.sslAvg },
+        { x: 'Set A', y: aData.timings.sslAvg },
+        { x: 'Set B', y: bData.timings.sslAvg },
       ],
     },
   ];
@@ -70,35 +70,46 @@ const HarCharts = ({ aData, bData }) => {
   ];
   return (
     <div className={styles.chartsContainer}>
-      <BarChart
-        data={barData}
-        width={700}
-        height={600}
-        fill={'#3182bd'}
-        title={'Average Load Times'}
-        yAxisLabel={'milliseconds'}
-        legend={true}
-        xAxisLabel={'onContentLoad vs onLoad'} />
-      <div>
-        <h1>aData made an average of {aData.requestAvg} requests</h1>
-        <h1>bData made an average of {bData.requestAvg} requests</h1>
+      <hr className={styles.hr} />
+      <div className={styles.barChart}>
+        <BarChart
+          data={barData}
+          width={800}
+          height={500}
+          fill={'#3182bd'}
+          title={'Average Time Request Spent in Network Phases'}
+          yAxisLabel={'milliseconds'}
+          legend={true}
+          legendOffset={400} />
       </div>
-      <PieChart
-        data={pieA}
-        width={400}
-        height={400}
-        radius={100}
-        innerRadius={20}
-        sectorBorderColor='white'
-        title='Average Load Time Percantages' />
-      <PieChart
-        data={pieB}
-        width={400}
-        height={400}
-        radius={100}
-        innerRadius={20}
-        sectorBorderColor='white'
-        title='Average Load Time Percantages' />
+      <hr className={styles.hr} />
+      <div>
+        <h1>Set A made an average of {aData.requestAvg} requests</h1>
+        <h1>Set B made an average of {bData.requestAvg} requests</h1>
+      </div>
+      <hr className={styles.hr} />
+      <div>
+        <div>
+          <PieChart
+            data={pieA}
+            width={400}
+            height={400}
+            radius={100}
+            innerRadius={20}
+            sectorBorderColor='white'
+            title='Average Load Time Percantages' />
+        </div>
+        <div>
+          <PieChart
+            data={pieB}
+            width={400}
+            height={400}
+            radius={100}
+            innerRadius={20}
+            sectorBorderColor='white'
+            title='Average Load Time Percantages' />
+        </div>
+      </div>
     </div>
   );
 };
