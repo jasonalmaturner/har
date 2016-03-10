@@ -79,6 +79,10 @@ const HarCharts = ({ aData, bData }) => {
         yAxisLabel={'milliseconds'}
         legend={true}
         xAxisLabel={'onContentLoad vs onLoad'} />
+      <div>
+        <h1>aData made an average of {aData.requestAvg} requests</h1>
+        <h1>bData made an average of {bData.requestAvg} requests</h1>
+      </div>
       <PieChart
         data={pieA}
         width={400}
