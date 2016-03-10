@@ -9,7 +9,7 @@ const store = configureStore();
 
 const App = () => (
   <Provider store={store}>
-    <div>
+    <div className={styles.mainContainer}>
       <HarUploadContainer />
       <HarChartsContainer />
     </div>

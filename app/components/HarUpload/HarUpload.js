@@ -8,31 +8,72 @@ const HarUpload = ({
   let dropzoneA;
   let dropzoneB;
   return (
-    <div>
-      <Dropzone onDrop={handleDrop.bind(null, 'harsA')}>
-        <div>
-          Drop har file here, or multiple files to compile an average of
-          multiple har files.
-        </div>
-      </Dropzone>
-      <div>
-        {harsA.length ? <div>
-          <h3>Uploading {harsA.length} file{harsA.length > 1 ? 's' : null}... </h3>
-          <ul>{harsA.map(file => <li key={file.preview}>{file.name}</li>)}</ul>
-        </div> : null}
+    <div className={styles.uploadContainer}>
+      <div className={styles.info}>
+        Use this app to compare two different sets of har data. You can compare two
+        different files, or two different sets of files. If you upload multiple
+        files into one set, then an average of all the files will be calculated.
+        Uploading multiple files will result in more reliable results, as it will
+        help reduce the chance of skewed results from potential outliers.
+        <br />
+        <br />
+        For example, you may want to generate multiple har files from the same page
+        on the same network. Then, you might generate multiple har files from the same page,
+        but loaded on a different network. You can then compare how the same page
+        loads on different networks.
       </div>
-      <Dropzone onDrop={handleDrop.bind(null, 'harsB')}>
-        <div>
-          Drop a second har file, or set of files, here to compare to.
+      <div className={styles.dropzonesContainer}>
+        <div className={styles.dropzoneContainer}>
+          <Dropzone className={styles.dropzone} onDrop={handleDrop.bind(null, 'harsA')}>
+            <div className={styles.dropzoneContent}>
+              Drop har file here, or multiple files to compile an average of
+              multiple har files.
+            </div>
+          </Dropzone>
+          <div>
+            {harsA.length ? <div>
+              <h4 className={styles.uploadingHeader}>
+                Uploading {harsA.length} file{harsA.length > 1 ? 's' : null}...
+              </h4>
+              <div>
+                {harsA.map(file => (
+                  <div
+                    className={styles.file}
+                    key={file.preview}>
+                      {file.name}
+                  </div>
+                )
+                )}
+              </div>
+            </div> : null}
+          </div>
         </div>
-      </Dropzone>
-      <div>
-        {harsB.length ? <div>
-          <h3>Uploading {harsB.length} file{harsB.length > 1 ? 's' : null}... </h3>
-          <ul>{harsB.map(file => <li key={file.preview}>{file.name}</li>)}</ul>
-        </div> : null}
+        <div className={styles.dropzoneContainer}>
+          <Dropzone className={styles.dropzone} onDrop={handleDrop.bind(null, 'harsB')}>
+            <div className={styles.dropzoneContent}>
+              Drop a second har file, or set of files, here to compare to.
+            </div>
+          </Dropzone>
+          <div>
+            {harsB.length ? <div>
+              <h4 className={styles.uploadingHeader}>
+                  Uploading {harsB.length} file{harsB.length > 1 ? 's' : null}...
+              </h4>
+              <div>
+                {harsB.map(file => (
+                  <div
+                    className={styles.file}
+                    key={file.preview}>
+                      {file.name}
+                  </div>
+                )
+                )}
+              </div>
+            </div> : null}
+          </div>
+        </div>
       </div>
-      <button onClick={e => {
+      <button className={styles.button} onClick={e => {
         handleRefreshClick(e);
         handleSend();
       }}>Send Files</button>

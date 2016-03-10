@@ -1,0 +1,67 @@
+.uploadContainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.info {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.dropzonesContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dropzoneContainer {
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.dropzone {
+  cursor: pointer;
+  padding: 10px;
+  height: 100px;
+  width: 200px;
+  border-style: dashed;
+  border-color: black;
+  border-width: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: background-color 0.5s;
+}
+
+.dropzone:hover {
+  background-color: #C6DBED;
+}
+
+.dropzoneContent {
+  font-size: 0.8em;
+  font-style: italic;
+  text-align: center;
+}
+
+.uploadingHeader {
+  text-align: center;
+}
+
+.file {
+  text-align: center;
+}
+
+.button {
+  box-sizing: border-box;
+  color: white;
+  background-color: #e6550d;
+  border-width: thin;
+  border-style: solid;
+  border-color: #fdae6b;
+  border-radius: 10px;
+}

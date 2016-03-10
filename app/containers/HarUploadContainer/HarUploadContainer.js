@@ -27,7 +27,7 @@ class HarUploadContainer extends Component {
   render() {
     const { harsA, harsB, isUploading, uploadError } = this.props;
     return (
-      <div>
+      <div className={styles.mainUploadContainer}>
         <UploadFiles
           handleDrop={this.handleDrop}
           harsA={harsA}
