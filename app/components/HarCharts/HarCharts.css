@@ -3,18 +3,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .barChart {
   height: 600px;
 }
 
-
 .hr {
   /*display: inherit;*/
+  margin: 30px 0;
   width: 100%;
   border: 0;
   height: 1px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.requests {
+  margin: 20px auto;
+}
+
+.title {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.piesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

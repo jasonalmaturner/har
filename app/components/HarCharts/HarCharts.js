@@ -83,13 +83,16 @@ const HarCharts = ({ aData, bData }) => {
           legendOffset={400} />
       </div>
       <hr className={styles.hr} />
-      <div>
-        <h1>Set A made an average of {aData.requestAvg} requests</h1>
-        <h1>Set B made an average of {bData.requestAvg} requests</h1>
+      <div className={styles.requests}>
+        <h2 className={styles.title}>Set A made an average of {Math.round(aData.requestAvg)} requests</h2>
+        <h2 className={styles.title}>Set B made an average of {Math.round(bData.requestAvg)} requests</h2>
       </div>
       <hr className={styles.hr} />
-      <div>
-        <div>
+      <h2 className={styles.title}>
+        Average Percentage of Time Spent Loading Resource Type
+      </h2>
+      <div className={styles.piesContainer}>
+        <div className={styles.pieContainer}>
           <PieChart
             data={pieA}
             width={400}
@@ -97,9 +100,9 @@ const HarCharts = ({ aData, bData }) => {
             radius={100}
             innerRadius={20}
             sectorBorderColor='white'
-            title='Average Load Time Percantages' />
+            title='Set A' />
         </div>
-        <div>
+        <div className={styles.pieContainer}>
           <PieChart
             data={pieB}
             width={400}
@@ -107,7 +110,7 @@ const HarCharts = ({ aData, bData }) => {
             radius={100}
             innerRadius={20}
             sectorBorderColor='white'
-            title='Average Load Time Percantages' />
+            title='Set B' />
         </div>
       </div>
     </div>
