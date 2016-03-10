@@ -5,17 +5,17 @@ import { BarChart, PieChart } from 'react-d3';
 const HarCharts = ({ aData, bData }) => {
   const barData = [
     {
-      name: 'aData',
+      name: 'onLoadAvg',
       values: [
-        { x: 'thing 1', y: aData.onContentAvg },
-        { x: 'thing 2', y: aData.onLoadAvg },
+        { x: 'a', y: aData.onLoadAvg },
+        { x: 'b', y: bData.onLoadAvg },
       ],
     },
     {
-      name: 'bData',
+      name: 'onContentLoadAvg',
       values: [
-        { x: 'thing 1', y: bData.onContentAvg },
-        { x: 'thing 2', y: bData.onLoadAvg },
+        { x: 'a', y: aData.onContentAvg },
+        { x: 'b', y: bData.onContentAvg },
       ],
     },
   ];
@@ -37,8 +37,8 @@ const HarCharts = ({ aData, bData }) => {
     <div>
       <BarChart
         data={barData}
-        width={500}
-        height={200}
+        width={700}
+        height={600}
         fill={'#3182bd'}
         title={'Average Load Times'}
         yAxisLabel={'milliseconds'}
