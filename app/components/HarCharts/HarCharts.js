@@ -5,17 +5,52 @@ import { BarChart, PieChart } from 'react-d3';
 const HarCharts = ({ aData, bData }) => {
   const barData = [
     {
-      name: 'onLoadAvg',
+      name: 'blocked',
       values: [
-        { x: 'a', y: aData.onLoadAvg },
-        { x: 'b', y: bData.onLoadAvg },
+        { x: 'a', y: aData.timings.blockedAvg },
+        { x: 'b', y: bData.timings.blockedAvg },
       ],
     },
     {
-      name: 'onContentLoadAvg',
+      name: 'dns',
       values: [
-        { x: 'a', y: aData.onContentAvg },
-        { x: 'b', y: bData.onContentAvg },
+        { x: 'a', y: aData.timings.dnsAvg },
+        { x: 'b', y: bData.timings.dnsAvg },
+      ],
+    },
+    {
+      name: 'connect',
+      values: [
+        { x: 'a', y: aData.timings.connectAvg },
+        { x: 'b', y: bData.timings.connectAvg },
+      ],
+    },
+    {
+      name: 'send',
+      values: [
+        { x: 'a', y: aData.timings.sendAvg },
+        { x: 'b', y: bData.timings.sendAvg },
+      ],
+    },
+    {
+      name: 'wait',
+      values: [
+        { x: 'a', y: aData.timings.waitAvg },
+        { x: 'b', y: bData.timings.waitAvg },
+      ],
+    },
+    {
+      name: 'receive',
+      values: [
+        { x: 'a', y: aData.timings.receiveAvg },
+        { x: 'b', y: bData.timings.receiveAvg },
+      ],
+    },
+    {
+      name: 'ssl',
+      values: [
+        { x: 'a', y: aData.timings.sslAvg },
+        { x: 'b', y: bData.timings.sslAvg },
       ],
     },
   ];
@@ -42,6 +77,7 @@ const HarCharts = ({ aData, bData }) => {
         fill={'#3182bd'}
         title={'Average Load Times'}
         yAxisLabel={'milliseconds'}
+        legend={true}
         xAxisLabel={'onContentLoad vs onLoad'} />
       <PieChart
         data={pieA}
